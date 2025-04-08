@@ -1,0 +1,84 @@
+{
+    "name": "noj",
+    "build": {
+        "dockerfile": "Dockerfile"
+        
+    },
+    
+    
+    "features": {
+        "ghcr.io/devcontainers-contrib/features/clojure-asdf:2": {},
+        "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {},
+        "ghcr.io/devcontainers-contrib/features/bash-command:1": 
+        {"command": "apt-get update && apt-get install -y rlwrap && apt-get install -y libxtst-dev"},
+        "ghcr.io/devcontainers-contrib/features/poetry:2" : {},
+        "ghcr.io/rocker-org/devcontainer-features/r-apt:0": {}
+        
+        
+    },
+    "customizations": {
+        "vscode": {
+            "settings": { 
+            // Set the theme to a minimal, eye-friendly theme
+            "workbench.colorTheme": "Quiet Light",
+            // Hide the activity bar to reduce distractions
+            "workbench.activityBar.visible": false,
+            // Hide the status bar at the bottom
+            "workbench.statusBar.visible": false,
+            // Open files in preview mode to avoid cluttering the editor with multiple tabs
+            "workbench.editor.enablePreview": true,
+            // Disable automatic updates to avoid update notifications
+            "update.mode": "none",
+            // Disable telemetry to prevent data collection prompts
+            "telemetry.enableTelemetry": false,
+            // Disable error and warning popups
+            "problems.showCurrentInStatus": false,
+            // Set font size for better readability
+            "editor.fontSize": 14,
+            // Enable smooth scrolling
+            "editor.smoothScrolling": true,
+            // Set line height for better readability
+            "editor.lineHeight": 22,
+            // Disable minimap to reduce visual clutter
+            "editor.minimap.enabled": false,
+            // Disable breadcrumbs navigation
+            "breadcrumbs.enabled": false,
+            // Disable parameter hints to avoid popups
+            "editor.parameterHints.enabled": false,
+            // Disable hover popups
+            "editor.hover.enabled": false,
+            // Disable suggestions popups
+            "editor.quickSuggestions": false,
+            // Disable word-based suggestions
+            "editor.wordBasedSuggestions": false,
+            // Disable code lens
+            "editor.codeLens": false,
+            //
+            "markdown-everywhere.customized-rules": [
+                "defaultRules",
+                {
+                    "name": "double semicolon",
+                    "whileRegExp": ";;",
+                    "example": ";; *hello",
+                    "languages": [
+                        { "name": "clojure", "source": "source.clj" }
+                    ]
+                }
+                ]},
+                "extensions": 
+                [
+                    "betterthantomorrow.calva",
+                    "streetsidesoftware.code-spell-checker",
+                    "zhaouv.vscode-markdown-everywhere",
+                    "eamodio.gitlens"
+                ]
+            }
+        },
+        
+        "remoteUser": "vscode",
+        "updateContentCommand": {"install python packages": "mkdir -p .venv && poetry install --sync" ,
+        "add link to python executable": "sudo ln -s /usr/bin/python3 /usr/local/bin/python"
+    },
+    "onCreateCommand": "clojure -Sthreads 1 -A:model-integration-tests:test:dev  -P"		
+    
+}
